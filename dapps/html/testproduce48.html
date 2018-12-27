@@ -1,0 +1,474 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
+  <link rel="stylesheet" type="text/css" href="./style.css">
+  <title>produce48 </title>
+
+</head>
+<body>
+  <h1>Produce 48</h1>
+  <h2>현재 총 투표한 사람의 수 <span id = "totalvote"></h2>
+    <h2>후보자 수 <span id = "numofidols"></h2>
+        <h2><span id = "alreadyVoted"></h2>
+      <fieldset>
+          <legend>당신의 아이돌을 골라주세요</legend>
+          <div><input type="checkbox" id="checkdidol1"/> <span id = "idol1"/></div>
+          <div><input type="checkbox" id="checkdidol2"/> <span id = "idol2"/></div>
+          <div><input type="checkbox" id="checkdidol3"/> <span id = "idol3"/></div>
+          <div><input type="checkbox" id="checkdidol4"/> <span id = "idol4"/></div>
+          <div><input type="checkbox" id="checkdidol5"/> <span id = "idol5"/></div>
+          <div><input type="checkbox" id="checkdidol6"/> <span id = "idol6"/></div>
+          <div><input type="checkbox" id="checkdidol7"/> <span id = "idol7"/></div>
+          <div><input type="checkbox" id="checkdidol8"/> <span id = "idol8"/></div>
+          <div><input type="checkbox" id="checkdidol9"/> <span id = "idol9"/></div>
+          <div><input type="checkbox" id="checkdidol10"/> <span id = "idol10"/></div>
+          <div><input type="checkbox" id="checkdidol11"/> <span id = "idol11"/></div>
+          <div><input type="checkbox" id="checkdidol12"/> <span id = "idol12"/></div>
+          <div>
+              <button onclick="vote()">투표완료</button>
+          </div>
+      </fieldset>
+      <fieldset>
+          <legend id = "idol1name"></legend>
+          <li id = "curidol1"/></i>
+      </fieldset>
+      <fieldset>
+          <legend id = "idol2name"></legend>
+          <li id = "curidol2"/></i>
+      </fieldset>
+      <fieldset>
+          <legend id = "idol3name"></legend>
+          <li id = "curidol3"/></i>
+      </fieldset>
+      <fieldset>
+          <legend id = "idol4name"></legend>
+          <li id = "curidol4"/></i>
+      </fieldset>
+      <fieldset>
+          <legend id = "idol5name"></legend>
+          <li id = "curidol5"/></i>
+      </fieldset>
+      <fieldset>
+          <legend id = "idol6name"></legend>
+          <li id = "curidol6"/></i>
+      </fieldset>
+      <fieldset>
+          <legend id = "idol7name"></legend>
+          <li id = "curidol7"/></i>
+      </fieldset>
+      <fieldset>
+          <legend id = "idol8name"></legend>
+          <li id = "curidol8"/></i>
+      </fieldset>
+      <fieldset>
+          <legend id = "idol9name"></legend>
+          <li id = "curidol9"/></i>
+      </fieldset>
+      <fieldset>
+          <legend id = "idol10name"></legend>
+          <li id = "curidol10"/></i>
+      </fieldset>
+      <fieldset>
+          <legend id = "idol11name"></legend>
+          <li id = "curidol11"/></i>
+      </fieldset>
+      <fieldset>
+          <legend id = "idol12name"></legend>
+          <li id = "curidol12"/></i>
+      </fieldset>
+
+
+
+<img src="http://localhost:8888/produce48/index.jpg"/>
+</body>
+<script>
+
+function current(){
+
+}
+
+function vote(){
+  var idol = new Array();
+  var i = 0;
+  if(document.getElementById("checkdidol1").checked){
+    idol[i] = 0;
+    i++;
+  }
+  if(document.getElementById("checkdidol2").checked){
+    idol[i] = 1;
+    i++;
+  }
+  if(document.getElementById("checkdidol3").checked){
+    idol[i] = 2;
+    i++;
+  }
+  if(document.getElementById("checkdidol4").checked){
+    idol[i] = 3;
+    i++;
+  }
+  if(document.getElementById("checkdidol5").checked){
+    idol[i] = 4;
+    i++;
+  }
+  if(document.getElementById("checkdidol6").checked){
+    idol[i] = 5;
+    i++;
+  }
+  if(document.getElementById("checkdidol7").checked){
+    idol[i] = 6;
+    i++;
+  }
+  if(document.getElementById("checkdidol8").checked){
+    idol[i] = 7;
+    i++;
+  }
+  if(document.getElementById("checkdidol9").checked){
+    idol[i] = 8;
+    i++;
+  }
+  if(document.getElementById("checkdidol10").checked){
+    idol[i] = 9;
+    i++;
+  }
+  if(document.getElementById("checkdidol11").checked){
+    idol[i] = 10;
+    i++;
+  }
+  if(document.getElementById("checkdidol12").checked){
+    idol[i] = 11;
+    i++;
+  }
+  if (i === 12){
+    produce48.vote(idol[0],idol[1],idol[2],idol[3],idol[4],idol[5],idol[6],idol[7],idol[8],idol[9],idol[10],idol[11], (e,r) => {
+      document.getElementById('alreadyVoted').innerHTML = '투표완료'
+    })}
+}
+
+var contractAddress = '0x7c7604592d233f763a9ccf87ebc788b8ac7a3ba4'
+var abi = [
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "agency",
+				"type": "string"
+			}
+		],
+		"name": "addidol",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "contractown",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "id1",
+				"type": "uint256"
+			},
+			{
+				"name": "id2",
+				"type": "uint256"
+			},
+			{
+				"name": "id3",
+				"type": "uint256"
+			},
+			{
+				"name": "id4",
+				"type": "uint256"
+			},
+			{
+				"name": "id5",
+				"type": "uint256"
+			},
+			{
+				"name": "id6",
+				"type": "uint256"
+			},
+			{
+				"name": "id7",
+				"type": "uint256"
+			},
+			{
+				"name": "id8",
+				"type": "uint256"
+			},
+			{
+				"name": "id9",
+				"type": "uint256"
+			},
+			{
+				"name": "id10",
+				"type": "uint256"
+			},
+			{
+				"name": "id11",
+				"type": "uint256"
+			},
+			{
+				"name": "id12",
+				"type": "uint256"
+			}
+		],
+		"name": "vote",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "alreadyVoted",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getContractOwner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "getIdolAgency",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "getIdolname",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getNumOfIdols",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "getScore",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getTotalVote",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+var produce48contract = web3.eth.contract(abi);
+var produce48 = produce48contract.at(contractAddress);
+
+function startApp(){
+  produce48.getTotalVote((e,r) => {
+    document.getElementById('totalvote').innerHTML = r
+    console.log(r);y
+  })
+
+  produce48.getIdolname(0, (e,r) => {
+    document.getElementById('idol1').innerHTML = r
+    ;
+  })
+  produce48.getIdolname(1, (e,r) => {
+    document.getElementById('idol2').innerHTML = r
+    ;
+  })
+  produce48.getIdolname(2, (e,r) => {
+    document.getElementById('idol3').innerHTML = r
+    ;
+  })
+  produce48.getIdolname(3, (e,r) => {
+    document.getElementById('idol4').innerHTML = r
+    ;
+  })
+  produce48.getIdolname(4, (e,r) => {
+    document.getElementById('idol5').innerHTML = r
+    ;
+  })
+  produce48.getIdolname(5, (e,r) => {
+    document.getElementById('idol6').innerHTML = r
+    ;
+  })
+  produce48.getIdolname(6, (e,r) => {
+    document.getElementById('idol7').innerHTML = r
+    ;
+  })
+  produce48.getIdolname(7, (e,r) => {
+    document.getElementById('idol8').innerHTML = r
+    ;
+  })
+  produce48.getIdolname(8, (e,r) => {
+    document.getElementById('idol9').innerHTML = r
+    ;
+  })
+  produce48.getIdolname(9, (e,r) => {
+    document.getElementById('idol10').innerHTML = r
+    ;
+  })
+  produce48.getIdolname(10, (e,r) => {
+    document.getElementById('idol11').innerHTML = r
+    ;
+  })
+  produce48.getIdolname(11, (e,r) => {
+    document.getElementById('idol12').innerHTML = r
+    ;
+  })
+  produce48.getNumOfIdols( (e,r) => {
+    document.getElementById('numofidols').innerHTML = r.toNumber();
+  })
+
+  produce48.getScore(0, (e,r) => {
+    document.getElementById('curidol1').innerHTML = r;
+  })
+  produce48.getIdolname(0, (e,r) => {
+    document.getElementById('idol1name').innerHTML = r;
+  })
+  produce48.getScore(1, (e,r) => {
+    document.getElementById('curidol2').innerHTML = r;
+  })
+  produce48.getIdolname(1, (e,r) => {
+    document.getElementById('idol2name').innerHTML = r;
+  })
+  produce48.getScore(2, (e,r) => {
+    document.getElementById('curidol3').innerHTML = r;
+  })
+  produce48.getIdolname(2, (e,r) => {
+    document.getElementById('idol3name').innerHTML = r;
+  })
+  produce48.getScore(3, (e,r) => {
+    document.getElementById('curidol4').innerHTML = r;
+  })
+  produce48.getIdolname(3, (e,r) => {
+    document.getElementById('idol4name').innerHTML = r;
+  })
+  produce48.getScore(4, (e,r) => {
+    document.getElementById('curidol5').innerHTML = r;
+  })
+  produce48.getIdolname(4, (e,r) => {
+    document.getElementById('idol5name').innerHTML = r;
+  })
+  produce48.getScore(5, (e,r) => {
+    document.getElementById('curidol6').innerHTML = r;
+  })
+  produce48.getIdolname(5, (e,r) => {
+    document.getElementById('idol6name').innerHTML = r;
+  })
+  produce48.getScore(6, (e,r) => {
+    document.getElementById('curidol7').innerHTML = r;
+  })
+  produce48.getIdolname(6, (e,r) => {
+    document.getElementById('idol7name').innerHTML = r;
+  })
+
+}
+window.addEventListener('load', function() {
+
+  // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+  if (typeof web3 !== 'undefined') {
+
+    // Use the browser's ethereum provider
+    //var provider = web3.currentProvider;
+    window.web3 = new Web3(web3.currentProvider);
+  } else {
+
+    console.log('No web3? You should consider trying MetaMask!')
+    window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+  }
+  startApp();
+
+})
+</script>
+
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.2.3/milligram.min.css">
+  <title>test 예제 </title>
+
+</head>
+<body>
+  <h1>message :  <span id="message">HELLO</h1>
+  <h1><span id="pending"></h1>
+  <h1>HI <span id="test3">HELLO</h1>
+  <h1>HI <span id="test4">HELLO</h1>
+    <button onclick = "startApp()">새로고침</button>
+    <button onclick = "sendApp()">보내기</button>
+</body>
+<script>
+
+var abi = [
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_greeting",
+				"type": "string"
+			}
+		],
+		"name": "setGreeting",
+		"outputs": [],
+		"payable": false,
+		"type": "function",
+		"stateMutability": "nonpayable"
+	},
+	{
+		"inputs": [
+			{
+				"name": "_greeting",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"type": "constructor",
+		"stateMutability": "nonpayable"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "greeting",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"type": "function",
+		"stateMutability": "view"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "say",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"type": "function",
+		"stateMutability": "view"
+	}
+]
+var contractAddress = '0x78d5b7ddd678f6b3e15b135847b085cae9b19e03';
+
+
+var testContract;
+var test;
+
+window.addEventListener('load', function() {
+
+  // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+  if (typeof web3 !== 'undefined') {
+
+    // Use the browser's ethereum provider
+    //var provider = web3.currentProvider;
+    window.web3 = new Web3(web3.currentProvider);
+  } else {
+    console.log('No web3? You should consider trying MetaMask!')
+    window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+  }
+  startApp();
+})
+// window.addEventListener('load', function() {
+//
+//   // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+//   if (typeof web3 !== 'undefined') {
+//
+//     // Use the browser's ethereum provider
+//     var provider = web3.currentProvider
+//
+//   } else {
+//     console.log('No web3? You should consider trying MetaMask!')
+//   }
+//
+//
+function startApp(){
+  testContract = web3.eth.contract(abi);
+  test = testContract.at(contractAddress);
+
+  test.say(function(e,r) {
+    if(e) {}
+    else {
+      document.getElementById('message').innerHTML = r;
+      console.log(r);
+    }
+  });
+
+
+
+}
+
+function sendApp(){
+  testContract = web3.eth.contract(abi);
+  test = testContract.at(contractAddress);
+  var txid
+  var message = 'WAter'
+  test.setGreeting(message,(e,r) => {
+    if(e) console.log(e);
+
+    else {
+      document.getElementById('pending').style.cssText ='color:red;';
+      document.getElementById('pending').innerHTML = 'Pending!'
+      txid = r;
+    }
+  });
+
+  var filter = web3.eth.filter('latest');
+  filter.watch(function(e, r) {
+    startApp();
+    web3.eth.getTransaction(txid, function(e,r){
+      if (r != null && r.blockNumber > 0) {
+        document.getElementById('pending').innerHTML = '(기록된 블록: ' + r.blockNumber + ')';
+        document.getElementById('pending').style.cssText ='color:green;';
+        document.getElementById('message').style.cssText ='color:green; font-size:200%;';
+        filter.stopWatching();
+      }
+   });
+ });
+}
+</script>
+
+</html>

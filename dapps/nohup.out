@@ -1,0 +1,28 @@
+// 로컬호스트 리믹스 키기 remix-ide
+// geth 접속하기  geth --networkid 4649 --nodiscover --maxpeers 0 --datadir /home/ljs/data_testnet/ --mine --minerthreads 1 --rpc --rpcaddr "0.0.0.0" --rpcport 8545 --rpccorsdomain "*" --rpcapi "admin,db,eth,debug,miner,net,shh,txpool,personal,web3" --unlock 0 --verbosity 6 console 2>> /home/ljs/data_testnet/geth.log
+  // WEB3.provider custom 4649 접속하기  localhost:8545
+
+> eth.getBalance(eth.accounts[0])
+380000000000000000000
+
+> eth.getBalance(eth.accounts[1])
+0
+> eth.accounts
+["0xcf71912714f8b81abd4970564d3838c6051bb1c1", "0xede1426a52f7c05c58d148b688e4108760d9c47b"]
+>
+geth --networkid 4649 --nodiscover --maxpeers 0 --datadir /home/ljs/data_testnet/ --mine --minerthreads 1 --rpc --rpcaddr "0.0.0.0" --rpcport 8545 --rpccorsdomain "*" --rpcapi "admin,db,eth,debug,miner,net,shh,txpool,personal.web3" --unlock 0 --verbosity 6 console 2>> /home/ljs/data_testnet/geth.log
+//접속 성공
+
+[{"constant": false,"inputs":[{"name": "_greeting "type": "string"}],"name":"setGreeting","outputs":[],"payable": false,"type": "function","stateMutability": "nonpayable"},{"inputs": [{	"name": "_greeting","type": "string"}],"payable": false,"type": "constructor","stateMutability":"nonpayable"},{"constant": true,"inputs":[],"name": "greeting","outputs": [{"name": "","type": "string"}],"payable": false,"type": "function","stateMutability": "view"},{"constant": true,"inputs":[],"name": "say","outputs":[{"name": "","type": "string"}],"payable": false,"type": "function","stateMutability": "view"}]
+0x3ecfb8d77db5e07bded12cefa630ce801fbf6bc7
+
+"chainId": 4649,
+"homesteadBlock": 0,
+"eip150Block": 0,
+"eip150Hash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+"eip155Block": 0,
+"eip158Block": 0,
+"clique": {
+  "period": 5,
+  "epoch": 30000
+}

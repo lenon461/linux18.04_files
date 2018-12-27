@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.2.3/milligram.min.css">
+  <title>Enrolmentcontract  </title>
+  <style>
+    body {margin-left:50px;}
+    #storedData {font-size:300%; margin-right:10px;}
+    #newValue {width: 200px; margin-right:10px; text-align:right;}
+  </style>
+</head>
+<body>
+  <script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
+  <script src="./lib/bignumber.min.js"></script>
+<h3>Enrolment Contract</h3>
+<ul>
+  <li>컨트랙트 주소: <span id="contractAddr"></span></li>
+  <li>내 어카운트 주소: <span id="accountAddr"></span></li>
+  <li>  <div id="result"></div></li>
+
+</ul>
+<table id = "table1"/>
+<caption>수업목록</caption>
+<thead>
+  <tr>
+    <th>강의명</th>
+    <th>교수</th>
+    <th>시간</th>
+    <th>강의실</th>
+    <th>학점</th>
+  </tr>
+</thead>
+<tbody>
+</tbody>
+
+</table>
+
+<script>  </script>
+<table>
+     <caption>수업목록</caption>
+     <thead>
+       <tr>
+         <th></th>
+         <th>강의명</th>
+         <th>교수</th>
+         <th>시간</th>
+         <th>강의실</th>
+         <th>학점</th>
+       </tr>
+     </thead>
+     <tbody>
+
+       <tr>
+         <th></th>
+         <td><span id="newname" type="text">NONE</th>
+         <td><span id="newprofessor" type="text"><span id="test">NONE</td>
+         <td><span id="newtime" type="text"><span id="test2">NONE</td>
+         <td><span id="newroom" type="text">NONE</td>
+         <td><span id="newcredit" type="text">NONE</td>
+       </tr>
+       <tr>
+         <th></th>
+         <td><input id="name" type="text"></th>
+         <td><input id="professor" type="text"><span id="test"></td>
+         <td><input id="time" type="text"><span id="test2"></td>
+         <td><input id="room" type="text"></td>
+         <td><input id="credit" type="text"></td>
+       </tr>
+     </tbody>
+
+   </table>
+   <button onclick="getValue()">새로고침</button>
+   <button onclick="setValue()">제출</button>
+
+</body>
+<script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
+<!-- script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script -->
+<script>
+//var abi = [{"constant":false,"inputs":[{"name":"x","type":"uint256"}],"name":"set","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"get","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"}];
+var contractAddress = '0x0Bd24C32Cf231421cCDad96aBd2fC8e81a5758E3';
+var abi =[
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"name": "_professor",
+				"type": "string"
+			},
+			{
+				"name": "_time",
+				"type": "string"
+			},
+			{
+				"name": "_room",
+				"type": "string"
+			},
+			{
+				"name": "_credit",
+				"type": "uint256"
+			}
+		],
+		"name": "createCourse",
+		"outputs": [],
+		"payable": false,
+		"type": "function",
+		"stateMutability": "nonpayable"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "courseId",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "professor",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "time",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "room",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"name": "credit",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "creater",
+				"type": "address"
+			}
+		],
+		"name": "NewCourse",
+		"type": "event"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "courses",
+		"outputs": [
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "professor",
+				"type": "string"
+			},
+			{
+				"name": "time",
+				"type": "string"
+			},
+			{
+				"name": "room",
+				"type": "string"
+			},
+			{
+				"name": "credit",
+				"type": "uint256"
+			},
+			{
+				"name": "creator",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"type": "function",
+		"stateMutability": "view"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "getCourse",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"type": "function",
+		"stateMutability": "view"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "getcredit",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"type": "function",
+		"stateMutability": "view"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "getname",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"type": "function",
+		"stateMutability": "view"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getnumberOfCourses",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"payable": false,
+		"type": "function",
+		"stateMutability": "view"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "getprofessor",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"type": "function",
+		"stateMutability": "view"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "getroom",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"type": "function",
+		"stateMutability": "view"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "gettime",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"type": "function",
+		"stateMutability": "view"
+	}
+]
+var Enrolmentcontract;
+var Enrolment;
+
+window.addEventListener('load', function() {
+
+  // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+  if (typeof web3 !== 'undefined') {
+    // Use Mist/MetaMask's provider
+    window.web3 = new Web3(web3.currentProvider);
+    console.log('WEb3')
+  } else {
+    console.log('No web3? You should consider trying MetaMask!')
+    // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+    window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+  }
+  // Now you can start your app & access web3 freely:
+  startApp();
+});
+
+function startApp() {
+  Enrolmentcontract = web3.eth.contract(abi);
+  Enrolment = Enrolmentcontract.at(contractAddress);
+  document.getElementById('contractAddr').innerHTML = getLink(contractAddress);
+  web3.eth.getAccounts(function(e,r){
+    document.getElementById('accountAddr').innerHTML = getLink(r[0]);
+  });
+  //showList();
+}
+function showList(i){
+  var table = document.getElementById("table1");
+  Enrolment.getnumberOfCourses((err, data) => {
+    if(err){
+      return;
+    } else{
+      var length = data.toString(10);
+      //console.log(length);
+      //for(var i = 0; i < 1; i++){
+        var row = table.insertRow(table.rows.length);
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
+        Enrolment.getname(i, (e,r) => {
+
+          if(r) cell1.innerHTML = r.toString(10);
+        });
+        Enrolment.getprofessor(i, (e,r) => {
+          if(r) cell2.innerHTML = r.toString(10);
+        });
+        Enrolment.gettime(i, (e,r) => {
+          if(r) cell3.innerHTML = r.toString(10);
+        });
+        Enrolment.getroom(i, (e,r) => {
+          if(r) cell4.innerHTML = r.toString(10);
+        });
+        Enrolment.getcredit(i, (e,r) => {
+          if(r) cell5.innerHTML = r.toString(10);
+        });
+      //}
+
+    }
+  });
+}
+function addList(){
+  var table = document.getElementById("table1");
+  Enrolment.getnumberOfCourses((err, length) => {
+    if(err){
+      return;
+    } else{
+      i = length-2;
+      var row = table.insertRow();
+      var cell1 = row.insertCell(0);
+      var cell2 = row.insertCell(1);
+      var cell3 = row.insertCell(2);
+      var cell4 = row.insertCell(3);
+      var cell5 = row.insertCell(4);
+      Enrolment.getname(i, (e,r) => {
+        cell1.innerHTML = r;
+      });
+      Enrolment.getprofessor(i, (e,r) => {
+        cell2.innerHTML = r;
+      });
+      Enrolment.gettime(i, (e,r) => {
+        cell3.innerHTML = r;
+      });
+      Enrolment.getroom(i, (e,r) => {
+        cell4.innerHTML = r;
+      });
+      Enrolment.getcredit(i, (e,r) => {
+        cell5.innerHTML = r;
+      });
+    }
+  });
+}
+
+function getValue() {
+
+  var length
+  Enrolment.getnumberOfCourses((err, data) => {
+      if(err){
+        return;
+      } else{
+        console.log(data.toString(10));
+        length = data.toString(10);
+        for(var i = 0; i < length; i++){
+          showList(i);
+        }
+      }
+  });
+  //Enrolment.getname.call(0)
+  //console.log(data);
+
+  Enrolment.getname(0, function(e,r){
+    document.getElementById('newname').innerHTML = r;
+
+  })
+  // Enrolment.getprofessor(0, function(e,r){
+  //   document.getElementById('newprofessor').innerHTML = r;
+  //
+  // })
+  // Enrolment.gettime(0, function(e,r){
+  //   document.getElementById('newtime').innerHTML = r;
+  // })
+  // Enrolment.getroom(0, function(e,r){
+  //   document.getElementById('newroom').innerHTML = r;
+  // })
+  // Enrolment.getcredit(0, function(e,r){
+  //   document.getElementById('newcredit').innerHTML = r;
+  // })
+}
+
+
+function setValue() {
+  var name = document.getElementById('name').value;
+  var professor = document.getElementById('professor').value;
+  var time = document.getElementById('time').value;
+  var room = document.getElementById('room').value;
+  var credit = document.getElementById('credit').value;
+
+  console.log('created');
+
+  var txid
+
+  var id = Enrolment.createCourse(name, professor, time, room, credit, function(e,r){
+    document.getElementById('result').innerHTML = 'Transaction id: ' + r + '<span id="pending" style="color:red;">(Pending)</span>';
+    txid = r;
+  });
+  var filter = web3.eth.filter('latest');
+  filter.watch(function(e, r) {
+    getValue();
+    web3.eth.getTransaction(txid, function(e,r){
+      if (r != null && r.blockNumber > 0) {
+        document.getElementById('pending').innerHTML = '(기록된 블록: ' + r.blockNumber + ')';
+        document.getElementById('pending').style.cssText ='color:green;';
+        filter.stopWatching();
+      }
+   });
+ });
+}
+
+function getLink(addr) {
+  return '<a target="_blank" href=https://testnet.etherscan.io/address/' + addr + '>' + addr +'</a>';
+}
+
+
+
+</script>
+</html>

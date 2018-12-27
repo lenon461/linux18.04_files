@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.2.3/milligram.min.css">
+  <title>test 예제 </title>
+
+
+</head>
+<body>
+  <h1>Dapp #1 LJS뱅크 입니다</h1>
+  <h2>현재 접속중인 지갑주소 : <span id = "currentaddress"></h2>
+    <h3> 고객용 버튼 </h3>
+    <button onclick = "getBalance()">잔고확인</button>
+    <h4><span id = "mybalance"></h4>
+
+    <button onclick = "deposit()">입금</button>
+    <input id="depositvalue" placeholder="입금하실 금액을 입력해주세요" type="text"/>
+
+    <button onclick = {withdraw()}>인출</button>
+    <input id="withdrawvalue" placeholder="출금하실 금액을 입력해주세요" type="text"/>
+
+    <h3> 관리자 버튼 </h3>
+    <button onclick = {getTotalBalance()}>현재 은행 잔고 보기</button>
+    <h4><span id = "bankbalance"></h4>
+</body>
+<script>
+
+var contractAddress = '0x1829a63f75f75b10c7f42aaec554e0e76a9b422f';
+var abi = [
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getTotalBalance",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_amount",
+				"type": "uint256"
+			}
+		],
+		"name": "withdraw",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "deposit",
+		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_account",
+				"type": "address"
+			}
+		],
+		"name": "getBalance",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+bankContract = web3.eth.contract(abi);
+bank = bankContract.at(contractAddress);
+
+
+window.addEventListener('load', function() {
+
+  // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+  if (typeof web3 !== 'undefined') {
+
+    // Use the browser's ethereum provider
+    //var provider = web3.currentProvider;
+    window.web3 = new Web3(web3.currentProvider);
+  } else {
+    console.log('No web3? You should consider trying MetaMask!')
+    window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+  }
+  startApp();
+  var res = getTotalBalance();
+  console.log(res);
+})
+
+
+
+function startApp(){
+  web3.eth.getAccounts(function(e,r){
+    document.getElementById('currentaddress').innerHTML = getLink(r[0]);
+    currentaddress = r[0];
+  });
+
+}
+
+function getLink(addr) {
+  return '<a target="_blank" href=https://testnet.etherscan.io/address/' + addr + '>' + addr +'</a>';
+}
+function deposit(){
+  var depositvalue = document.getElementById('depositvalue').value;
+  console.log(depositvalue);
+  bank.deposit({value: web3.toWei(depositvalue, 'Wei')}, function(e,r) {
+      console.log(r);
+  });
+}
+function withdraw(){
+  var num = document.getElementById('withdrawvalue').value;
+
+  bank.withdraw(num, function(e,r) {
+      console.log(r);
+  });
+
+}
+function getBalance(){
+  web3.eth.getAccounts(function(e,r){
+    console.log(r);
+
+    bank.getBalance(r[0], function(e,rb) {
+         document.getElementById('mybalance').innerHTML = rb.toString(10);
+        console.log(rb);
+    });
+  });
+
+}
+function getTotalBalance(){
+  res = bank.getTotalBalance((e,data)=> {
+    res = data.toString(10);
+    document.getElementById('bankbalance').innerHTML = data;
+    console.log(data.toString(10));
+    console.log(data.toNumber());
+
+  });
+
+}
+
+
+</script>
+
+</html>

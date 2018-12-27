@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
+  <link rel="stylesheet" type="text/css" href="./style.css">
+  <title>produce48 </title>
+
+</head>
+<script>
+var contractAddress = '0x7c7604592d233f763a9ccf87ebc788b8ac7a3ba4'
+var abi = [
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "agency",
+        "type": "string"
+      }
+    ],
+    "name": "addidol",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "contractown",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "id1",
+        "type": "uint256"
+      },
+      {
+        "name": "id2",
+        "type": "uint256"
+      },
+      {
+        "name": "id3",
+        "type": "uint256"
+      },
+      {
+        "name": "id4",
+        "type": "uint256"
+      },
+      {
+        "name": "id5",
+        "type": "uint256"
+      },
+      {
+        "name": "id6",
+        "type": "uint256"
+      },
+      {
+        "name": "id7",
+        "type": "uint256"
+      },
+      {
+        "name": "id8",
+        "type": "uint256"
+      },
+      {
+        "name": "id9",
+        "type": "uint256"
+      },
+      {
+        "name": "id10",
+        "type": "uint256"
+      },
+      {
+        "name": "id11",
+        "type": "uint256"
+      },
+      {
+        "name": "id12",
+        "type": "uint256"
+      }
+    ],
+    "name": "vote",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "alreadyVoted",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getContractOwner",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "getIdolAgency",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "getIdolname",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getNumOfIdols",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "getScore",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getTotalVote",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
+window.addEventListener('load', function() {
+
+  // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+  if (typeof web3 !== 'undefined') {
+
+    // Use the browser's ethereum provider
+    //var provider = web3.currentProvider;
+    window.web3 = new Web3(web3.currentProvider);
+  } else {
+
+    console.log('No web3? You should consider trying MetaMask!')
+    window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+  }
+
+})
+var produce48contract = web3.eth.contract(abi);
+var produce48 = produce48contract.at(contractAddress);
+</script>
+
+
+
+<body>
+  <h1>dwdw</h1>
+  <div><input type="checkbox" id="checkdidol1"/>@1 <span id = "idol1"/>@2</div>
+</body>
+
+
+  </html>
